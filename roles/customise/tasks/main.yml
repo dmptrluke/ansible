@@ -1,6 +1,22 @@
 ---
 # tasks file for roles/customise
 
+- name: Install tools
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - git-core
+      - zsh
+      - nano
+      - htop
+      - httpie
+
+- name: Set default editor to nano
+  community.general.alternatives:
+    name: editor
+    path: /bin/nano
+
 - name: Fetch nano syntax highlighting enhancements.
   git:
     repo: https://github.com/scopatz/nanorc.git
@@ -31,11 +47,6 @@
     owner: root
     group: root
     mode: 0644
-
-- name: Set default editor to nano
-  community.general.alternatives:
-    name: editor
-    path: /bin/nano
 
 - name: Install lsiommu
   ansible.builtin.copy:

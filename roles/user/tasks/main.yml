@@ -1,17 +1,6 @@
 ---
 # tasks file for roles/user
 
-- name: Install tools
-  apt:
-    name: "{{ packages }}"
-  vars:
-    packages:
-      - git-core
-      - zsh
-      - nano
-      - htop
-      - httpie
-
 - name: Create user account
   user: name="{{ user }}" password="{{ user_pass }}" shell=/usr/bin/zsh
 
