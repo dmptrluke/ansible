@@ -1,0 +1,46 @@
+---
+# tasks file for roles/customise
+
+- name: Fetch nano syntax highlighting enhancements.
+  git:
+    repo: https://github.com/scopatz/nanorc.git
+    dest: /usr/share/nano-syntax-highlighting/
+    version: 2020.10.10
+
+- name: Add includes to systemwide nanorc.
+  blockinfile:
+    path: /etc/nanorc
+    marker: "## {mark} extended syntax highlighting"
+    block: |
+      include "/usr/share/nano-syntax-highlighting/yaml.nanorc"
+      include "/usr/share/nano-syntax-highlighting/zsh.nanorc"
+      include "/usr/share/nano-syntax-highlighting/nginx.nanorc"
+
+- name: Better tabs for systemwide nanorc.
+  blockinfile:
+    path: /etc/nanorc
+    marker: "## {mark} better tabs"
+    block: |
+        set tabsize 4
+        set tabstospaces
+
+- name: Copy /etc/motd
+  template:
+    src: motd.j2
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Set default editor to nano
+  community.general.alternatives:
+    name: editor
+    path: /bin/nano
+
+- name: Install lsiommu
+  ansible.builtin.copy:
+    src: lsiommu
+    dest: /usr/local/bin
+    owner: root
+    group: root
+    mode: a+x

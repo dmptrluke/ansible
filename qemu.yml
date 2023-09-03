@@ -1,0 +1,5 @@
+---
+- hosts: qemu
+  become: true
+  roles:
+    - role: qemu-guest-agent

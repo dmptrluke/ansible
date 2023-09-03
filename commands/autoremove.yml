@@ -1,0 +1,20 @@
+---
+- hosts: ubuntu pi proxmox
+  become: true
+  pre_tasks:
+    - name: Checking for un-needed packages
+      command: apt-get -y --dry-run autoremove
+      changed_when: False
+      register: check_autoremove
+      args:
+        warn: False
+    - name: Show un-needed packages
+      debug:
+        msg: "{{ check_autoremove.stdout_lines }}"
+      when: "'packages will be REMOVED' in check_autoremove.stdout"
+
+  tasks:
+    - name: Remove un-needed packages
+      apt:
+        autoremove: yes
+      when: "'packages will be REMOVED' in check_autoremove.stdout"

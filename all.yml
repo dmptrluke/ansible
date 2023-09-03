@@ -1,0 +1,9 @@
+---
+- import_playbook: base_ubuntu.yml
+- import_playbook: base_pi.yml
+- import_playbook: base_proxmox.yml
+- import_playbook: user_kakapo.yml
+- import_playbook: docker.yml
+- import_playbook: netdata.yml
+- import_playbook: qemu.yml
+- import_playbook: user_kay.yml

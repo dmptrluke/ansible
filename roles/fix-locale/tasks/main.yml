@@ -1,0 +1,21 @@
+---
+# tasks file for roles/fix-locale
+
+- name: Make sure the en_US.UTF-8 locale exists
+  locale_gen:
+    name: en_US.UTF-8
+    state: present
+
+- name: Get current locale and language configuration
+  command: localectl status
+  register: locale_status
+  changed_when: false
+
+- name: Parse 'LANG' from current locale and language configuration
+  set_fact:
+    locale_lang: "{{ locale_status.stdout | regex_search('LANG=([^\n]+)', '\\1') | first }}"
+
+- name: Configure locale to '{{ config_system_locale }}'
+  command: localectl set-locale LANG={{ config_system_locale }}
+  changed_when: locale_lang != config_system_locale
+

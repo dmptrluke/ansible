@@ -1,0 +1,5 @@
+---
+- hosts: user_kay
+  become: true
+  roles:
+    - user

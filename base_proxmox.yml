@@ -1,0 +1,6 @@
+---
+- hosts: base_proxmox
+  become: true
+  roles:
+    - common
+    - customise

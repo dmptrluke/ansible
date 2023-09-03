@@ -1,0 +1,16 @@
+---
+# tasks file for roles/quiet-ubuntu
+
+- name: Disable MOTD News
+  ansible.builtin.copy:
+    src: motd-news
+    dest: /etc/default/motd-news
+    owner: root
+    group: root
+    mode: a+x
+
+- name: Disable Help Text
+  ansible.builtin.file:
+    path: /etc/update-motd.d/10-help-text
+    state: file
+    mode: a-x

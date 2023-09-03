@@ -1,0 +1,5 @@
+---
+- hosts: netdata
+  become: true
+  roles:
+    - role: netdata

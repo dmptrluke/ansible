@@ -1,0 +1,56 @@
+---
+# tasks file for roles/user
+
+- name: Install tools
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - git-core
+      - zsh
+      - nano
+      - htop
+      - httpie
+
+- name: Create user account
+  user: name="{{ user }}" password="{{ user_pass }}" shell=/usr/bin/zsh
+
+- name: Add authorized keys
+  authorized_key:
+    user: "{{ user }}"
+    key: "{{ lookup('file', user_key) }}"
+    state: present
+    exclusive: True
+
+- name: Add user to sudoers
+  lineinfile: dest=/etc/sudoers
+              regexp="{{ user }} ALL"
+              line="{{ user }} ALL=(ALL) ALL"
+              state=present
+
+- name: Copy .zshrc
+  template:
+    src: user_zshrc.j2
+    dest: "/home/{{ user }}/.zshrc"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0644
+
+- name: Set name/email in .gitconfig
+  ansible.builtin.blockinfile:
+      path: "/home/{{ user }}/.gitconfig"
+      create: true
+      mode: 0644
+      marker: "# {mark} ANSIBLE MANAGED NAME/EMAIL"
+      block: |
+          [user]
+              name = {{ user_name }}
+              email = {{ user_email }}
+
+- name: Copy root .zshrc
+  template:
+    src: root_zshrc.j2
+    dest: /root/.zshrc
+    owner: root
+    group: root
+    mode: 0644

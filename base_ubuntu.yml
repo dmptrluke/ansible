@@ -1,0 +1,12 @@
+---
+- hosts: base_ubuntu
+  become: true
+  roles:
+    - role: common
+    - role: fix-locale
+    - role: quiet-ubuntu
+    - role: customise
+    - role: stuvusit.systemd-timesyncd
+      config:
+        timesync_timezone: "Pacific/Auckland"
+    - role: hifis.unattended_upgrades

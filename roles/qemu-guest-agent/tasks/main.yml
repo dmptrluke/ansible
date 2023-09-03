@@ -1,0 +1,15 @@
+---
+# tasks file for roles/qemu-guest-agent
+
+- name: QEMU Guest Agent
+  when: ansible_system_vendor == 'QEMU'
+  block:
+    - name: Install QEMU Guest Agent
+      ansible.builtin.package:
+        name: qemu-guest-agent
+        state: present
+    - name: Enable QEMU Guest Agent
+      ansible.builtin.service:
+        name: qemu-guest-agent
+        enabled: yes
+        state: started

@@ -1,0 +1,9 @@
+---
+# tasks file for roles/disable-pi
+
+- name: Disable SSH access for "pi" user
+  lineinfile: dest=/etc/ssh/sshd_config
+              regexp="^DenyUsers"
+              line="DenyUsers pi"
+              state=present
+  notify: Restart ssh
