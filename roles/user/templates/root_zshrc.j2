@@ -47,5 +47,8 @@ alias grep='grep --color=auto'
 alias rs='exit'
 alias ctl='sudo systemctl'
 
+# include global .zshrc
+[ -f /etc/zshrc ] && source /etc/zshrc
+
 # include local .zshrc
 [ -f .zshrc_local ] && source .zshrc_local
