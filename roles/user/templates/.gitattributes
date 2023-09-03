@@ -1,0 +1,3 @@
+# Correct Github language graph.
+*_zshrc.j2 linguist-language=zsh
+gitconfig.j2 linguist-language=gitconfig
