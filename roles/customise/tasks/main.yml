@@ -11,6 +11,7 @@
       - nano
       - htop
       - httpie
+      - mosh
 
 - name: Set default editor to nano
   community.general.alternatives:
