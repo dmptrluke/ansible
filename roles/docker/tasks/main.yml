@@ -62,28 +62,24 @@
   pip:
     name: docker
 
-
-- name: Check if dive is installed
-  package:
-    name: dive
-    state: present
-  check_mode: true
-  register: dive_installed
+- name: Gather package facts
+  package_facts:
+    manager: auto
 
 - name: Copy dive installer to remote machine
-  when: dive_installed == 0
+  when: '"dive" not in ansible_facts.packages'
   ansible.builtin.copy:
     src: dive_0.11.0_linux_amd64.deb
     dest: /tmp/dive.deb
     mode: 0644
 
 - name: Install dive
-  when: dive_installed == 0
+  when: '"dive" not in ansible_facts.packages'
   ansible.builtin.apt:
     deb: /tmp/dive.deb
 
 - name: Remove dive installer
-  when: dive_installed == 0
+  when: '"dive" not in ansible_facts.packages'
   ansible.builtin.file:
     path: /tmp/dive.deb
     state: absent
