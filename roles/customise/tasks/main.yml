@@ -49,6 +49,14 @@
     group: root
     mode: 0644
 
+- name: Copy root .zshrc
+  template:
+    src: root_zshrc.j2
+    dest: /root/.zshrc
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Install lsiommu
   ansible.builtin.copy:
     src: lsiommu

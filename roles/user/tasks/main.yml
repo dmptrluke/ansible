@@ -35,11 +35,3 @@
           [user]
               name = {{ user_name }}
               email = {{ user_email }}
-
-- name: Copy root .zshrc
-  template:
-    src: root_zshrc.j2
-    dest: /root/.zshrc
-    owner: root
-    group: root
-    mode: 0644
