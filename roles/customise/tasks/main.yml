@@ -13,6 +13,14 @@
       - httpie
       - mosh
 
+- name: Install full Python tools
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - python3-setuptools
+      - python3-pip
+
 - name: Set default editor to nano
   community.general.alternatives:
     name: editor
@@ -64,3 +72,7 @@
     owner: root
     group: root
     mode: a+x
+
+- name: Install 'TLDR'
+  pip:
+    name: tldr
