@@ -1,5 +1,5 @@
 ---
-- hosts: pi
+- hosts: base_pi
   become: true
   roles:
     - common
