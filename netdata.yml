@@ -1,5 +1,6 @@
 ---
 - hosts: netdata
+  name: Play for setting up Netdata on a host
   become: true
   roles:
     - role: netdata

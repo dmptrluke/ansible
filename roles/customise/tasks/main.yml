@@ -49,6 +49,12 @@
         set tabsize 4
         set tabstospaces
 
+- name: Remove old option from nanorc
+  lineinfile:
+   path: /etc/nanorc
+   search_string: 'set suspend'
+   state: absent
+
 - name: Copy /etc/motd
   template:
     src: motd.j2
@@ -72,7 +78,3 @@
     owner: root
     group: root
     mode: a+x
-
-- name: Install 'TLDR'
-  pip:
-    name: tldr

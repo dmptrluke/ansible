@@ -1,0 +1,7 @@
+---
+- hosts: docker_install
+  name: Play for installing Docker on a host
+  become: true
+  roles:
+    - geerlingguy.docker
+    - docker-postinstall

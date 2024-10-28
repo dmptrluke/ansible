@@ -1,5 +1,6 @@
 ---
 - hosts: qemu
+  name: Play for setting up a QEMU guest agent on host
   become: true
   roles:
     - role: qemu-guest-agent

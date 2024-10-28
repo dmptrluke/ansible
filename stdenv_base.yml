@@ -1,0 +1,6 @@
+---
+- hosts: stdenv_base
+  name: Play for setting up a standard Docker environment on a host
+  become: true
+  roles:
+    - stdenv-base

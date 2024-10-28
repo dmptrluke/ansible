@@ -1,0 +1,36 @@
+---
+# tasks file for roles/docker-postinstall
+
+- name: Add Deploy to Docker Group
+  ansible.builtin.user:
+    name: "deploy"
+    groups: "docker"
+    append: yes
+
+- name: Add Kakapo to Docker Group
+  ansible.builtin.user:
+    name: "kakapo"
+    groups: "docker"
+    append: yes
+
+- name: Add alias to global zshrc
+  ansible.builtin.blockinfile:
+      path: "/etc/zshrc"
+      create: true
+      owner: root
+      mode: u=rw,g=r,o=r
+      marker: "# {mark} ANSIBLE MANAGED DOCKER ALIAS"
+      block: |
+          alias ctop='docker run -it --rm --name ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest'
+          alias update-docker='docker run --rm --name watchtower -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower --run-once'
+          alias dc='docker compose'
+          alias d='docker'
+          alias upd='docker compose pull && docker compose up -d'
+
+- name: Disable IP in sysinfo
+  ansible.builtin.copy:
+    src: client.conf
+    dest: /etc/landscape/client.conf
+    owner: root
+    group: root
+    mode: 0644

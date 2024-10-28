@@ -1,20 +1,18 @@
 ---
-- hosts: base_ubuntu pi base_proxmox
+- hosts: base_ubuntu base_pi base_proxmox
   become: true
   pre_tasks:
     - name: Checking for outdated packages
       command: apt-get -y --dry-run upgrade
       changed_when: False
       register: check_upgrade
-      args:
-        warn: False
     - name: Show outdated packages
       debug:
         msg: "{{ check_upgrade.stdout_lines }}"
       when: "'packages will be upgraded' in check_upgrade.stdout"
 
   tasks:
-    - name: Remove un-needed packages
+    - name: Upgrade packages
       apt:
         upgrade: yes
       when: "'packages will be upgraded' in check_upgrade.stdout"
