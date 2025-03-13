@@ -12,6 +12,10 @@
       - htop
       - httpie
       - mosh
+      - fd-find
+      - zoxide
+      - fzf
+      - bat
 
 - name: Install full Python tools
   apt:

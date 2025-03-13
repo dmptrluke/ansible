@@ -1,0 +1,5 @@
+---
+- hosts: user_jade
+  become: true
+  roles:
+    - user

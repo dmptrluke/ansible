@@ -46,6 +46,14 @@ alias grep='grep --color=auto'
 alias rs='sudo su -s /bin/zsh'
 alias ctl='sudo systemctl'
 
+alias fzn='nano $(fzf --preview "batcat --color=always --style=numbers --line-range=:500 {}")'
+alias fzp='fzf --preview "batcat --color=always --style=numbers --line-range=:500 {}"'
+alias fd='fdfind'
+alias bat='batcat'
+
+# initalise zoxide
+eval "$(zoxide init zsh)"
+
 # include global .zshrc
 [ -f /etc/zshrc ] && source /etc/zshrc
 
